@@ -1,0 +1,44 @@
+name: Linux smoke (T1–T4)
+
+on:
+  push:
+    branches: [develop, main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    name: Ubuntu native Docker smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install ciwalk + expect
+        run: |
+          python -m pip install -U pip
+          pip install -e ".[dev]"
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq expect
+
+      - name: Host / Docker identity (prove native Linux)
+        run: |
+          echo "uname=$(uname -a)"
+          docker version
+          docker info --format 'OSType={{.OSType}} Architecture={{.Architecture}} Name={{.Name}}'
+
+      - name: Unit tests
+        run: pytest -q
+
+      - name: Smoke T1–T4
+        env:
+          CIWALK: ciwalk
+        run: |
+          chmod +x scripts/linux-smoke.sh
+          scripts/linux-smoke.sh

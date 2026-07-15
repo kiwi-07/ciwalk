@@ -1,0 +1,23 @@
+name: broken-ci
+on: push
+
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare workspace
+        run: |
+          mkdir -p build
+          echo "ready" > build/status.txt
+          cat build/status.txt
+
+      - name: Require marker file
+        run: |
+          echo "Looking for build/MARKER..."
+          test -f build/MARKER
+          echo "MARKER found — continuing"
+
+      - name: Finish
+        run: echo "All good — pipeline complete."

@@ -1,0 +1,18 @@
+name: hello
+on: push
+
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Say hello
+        run: |
+          echo "Hello from ciwalk"
+          echo "Workspace: $GITHUB_WORKSPACE"
+          ls -la
+      - name: Check CI env
+        run: |
+          test "$CI" = "true"
+          test "$GITHUB_ACTIONS" = "true"
+          echo "env ok"
