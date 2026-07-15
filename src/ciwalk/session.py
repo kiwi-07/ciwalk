@@ -2,12 +2,11 @@
 
 from __future__ import annotations
 
+import sys
 import time
 from pathlib import Path
 
 from rich.console import Console
-
-import sys
 
 from ciwalk.container import DEFAULT_IMAGE, WORKSPACE, JobContainer, resolve_workdir
 from ciwalk.errors import CiwalkError, ConfigError
