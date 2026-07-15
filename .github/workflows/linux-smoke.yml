@@ -33,6 +33,10 @@ jobs:
           docker version
           docker info --format 'OSType={{.OSType}} Architecture={{.Architecture}} Name={{.Name}}'
 
+      - name: Build default runner image
+        run: |
+          docker build -f Dockerfile.runner -t ghcr.io/kiwi-07/ciwalk-runner:latest .
+
       - name: Unit tests
         run: pytest -q
 

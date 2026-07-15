@@ -54,6 +54,8 @@ chmod +x ./ciwalk
 ./ciwalk run examples/hello.yml
 ```
 
+Default job image is [`ghcr.io/kiwi-07/ciwalk-runner:latest`](https://github.com/kiwi-07/ciwalk/pkgs/container/ciwalk-runner) (override with `--image`). First run may pull it once.
+
 ## Usage
 
 ```bash
@@ -65,7 +67,7 @@ ciwalk run <workflow.yml> [OPTIONS]
 | `--job / -j NAME` | Job id (required if the workflow has multiple jobs) |
 | `--pause-on-fail` | On failure, open a shell then ask retry / continue / abort |
 | `--breakpoint / -b NAME` | Pause *before* a step (exact step name) |
-| `--image IMAGE` | Override runner image (default: `catthehacker/ubuntu:act-latest`) |
+| `--image IMAGE` | Override runner image (default: `ghcr.io/kiwi-07/ciwalk-runner:latest`) |
 | `--workdir / -C PATH` | Host path mounted as `/github/workspace` (default: cwd) |
 | `--keep` | Leave the container running after the job ends |
 | `--input / -i KEY=VALUE` | Set `${{ inputs.* }}` (repeatable; overrides workflow defaults) |

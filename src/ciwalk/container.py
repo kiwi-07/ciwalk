@@ -13,7 +13,7 @@ from docker.models.containers import Container
 
 from ciwalk.errors import DockerError
 
-DEFAULT_IMAGE = "catthehacker/ubuntu:act-latest"
+DEFAULT_IMAGE = "ghcr.io/kiwi-07/ciwalk-runner:latest"
 WORKSPACE = "/github/workspace"
 CIWALK_LABEL = "ciwalk"
 CIWALK_JOB_LABEL = "ciwalk.job"
