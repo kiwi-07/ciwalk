@@ -86,6 +86,14 @@ pip install -e ".[dev]"
 pytest
 ```
 
+### Linux smoke (T1–T4)
+
+Native Linux Docker bind-mount behavior can differ from Docker Desktop on Mac. CI runs this on `ubuntu-latest`:
+
+```bash
+scripts/linux-smoke.sh
+```
+
 ## License
 
 MIT
