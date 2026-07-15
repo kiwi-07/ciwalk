@@ -1,6 +1,11 @@
 # ciwalk
 
+![CI](https://github.com/kiwi-07/ciwalk/actions/workflows/linux-smoke.yml/badge.svg)
+![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
+
 Run your CI pipeline locally, **pause at any step**, drop into a live shell to inspect or fix state, then **retry / continue** — no more commit-push-pray.
+
+![ciwalk demo: pause, fix, retry](docs/demo.gif)
 
 ```bash
 pip install -e .
@@ -19,7 +24,7 @@ CI feedback is still mostly blind: edit YAML → commit → push → wait → re
 ## Install
 
 ```bash
-git clone <repo-url> ciwalk && cd ciwalk
+git clone https://github.com/kiwi-07/ciwalk.git && cd ciwalk
 pip install -e ".[dev]"
 ```
 
@@ -35,13 +40,13 @@ ciwalk run <workflow.yml> [OPTIONS]
 | `--pause-on-fail` | On failure, open a shell then ask retry / continue / abort |
 | `--breakpoint / -b NAME` | Pause *before* a step (exact step name) |
 | `--image IMAGE` | Override runner image (default: `catthehacker/ubuntu:act-latest`) |
-| `--workdir / -C PATH` | Host path mounted at `/github/workspace` (default: cwd) |
+| `--workdir / -C PATH` | Host path mounted as `/github/workspace` (default: cwd) |
 | `--keep` | Leave the container running after the job ends |
 | `--input / -i KEY=VALUE` | Set `${{ inputs.* }}` (repeatable; overrides workflow defaults) |
 
 ```bash
-ciwalk cleanup          # remove leftover ciwalk containers (e.g. after kill -9)
-ciwalk cleanup --dry-run
+ciwalk cleanup           # remove leftover ciwalk containers (e.g. after kill -9)
+ciwalk cleanup --dry-run # list matching containers without removing them
 ```
 
 ### Pause flow
@@ -58,14 +63,16 @@ ciwalk cleanup --dry-run
 ciwalk run examples/broken-ci.yml --pause-on-fail
 ```
 
-Steps 1–2 pass; step **Require marker file** fails. In the shell:
+Matches [`examples/broken-ci.yml`](examples/broken-ci.yml): checkout + **Prepare workspace** pass; **Require marker file** fails (`build/MARKER` missing). In the shell:
 
 ```bash
 touch build/MARKER
 exit
 ```
 
-Then choose **`retry`**. The step passes and the job finishes.
+Then choose **`retry`**. The step passes, **Finish** runs, and the job completes.
+
+Recording source: [`docs/demo.cast`](docs/demo.cast) (replay with `asciinema play docs/demo.cast`).
 
 ## Supported GitHub Actions subset (MVP)
 
@@ -78,6 +85,10 @@ Then choose **`retry`**. The step passes and the job finishes.
 - Jobs that are reusable workflow calls, or use job-level `needs:` / `if:` → **SKIPPED** (loud, non-zero exit — never silent pass)
 
 **Not yet:** matrix/parallel jobs, secrets, full expression language (`github.*`, `secrets.*`, …), arbitrary marketplace actions, GitLab/Circle/Jenkins, caching.
+
+### Roadmap / want to help?
+
+Gaps above are intentional MVP cuts, not forever. Prefer contributions around expression support (`github.*`), matrix builds, and broader `uses:` allowlisting — file an [issue](https://github.com/kiwi-07/ciwalk/issues) or PR on `develop`. Good first issues welcome once labeled.
 
 ## Development
 
