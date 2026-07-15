@@ -54,7 +54,11 @@ chmod +x ./ciwalk
 ./ciwalk run examples/hello.yml
 ```
 
-Default job image is [`ghcr.io/kiwi-07/ciwalk-runner:latest`](https://github.com/kiwi-07/ciwalk/pkgs/container/ciwalk-runner) (override with `--image`). First run may pull it once.
+Default job image is `ciwalk-runner:latest` (built from [`Dockerfile.runner`](Dockerfile.runner); override with `--image`). First run builds/pulls it if missing:
+
+```bash
+docker build -f Dockerfile.runner -t ciwalk-runner:latest .
+```
 
 ## Usage
 
@@ -67,7 +71,7 @@ ciwalk run <workflow.yml> [OPTIONS]
 | `--job / -j NAME` | Job id (required if the workflow has multiple jobs) |
 | `--pause-on-fail` | On failure, open a shell then ask retry / continue / abort |
 | `--breakpoint / -b NAME` | Pause *before* a step (exact step name) |
-| `--image IMAGE` | Override runner image (default: `ghcr.io/kiwi-07/ciwalk-runner:latest`) |
+| `--image IMAGE` | Override runner image (default: `ciwalk-runner:latest`) |
 | `--workdir / -C PATH` | Host path mounted as `/github/workspace` (default: cwd) |
 | `--keep` | Leave the container running after the job ends |
 | `--input / -i KEY=VALUE` | Set `${{ inputs.* }}` (repeatable; overrides workflow defaults) |

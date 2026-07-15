@@ -27,7 +27,9 @@ jobs:
 
       - name: Build and push
         run: |
-          IMAGE=ghcr.io/kiwi-07/ciwalk-runner
-          docker build -f Dockerfile.runner -t "$IMAGE:latest" -t "$IMAGE:${{ github.sha }}" .
-          docker push "$IMAGE:latest"
-          docker push "$IMAGE:${{ github.sha }}"
+          # Local/default name + GHCR for remote pullers
+          docker build -f Dockerfile.runner -t ciwalk-runner:latest \
+            -t ghcr.io/kiwi-07/ciwalk-runner:latest \
+            -t "ghcr.io/kiwi-07/ciwalk-runner:${{ github.sha }}" .
+          docker push ghcr.io/kiwi-07/ciwalk-runner:latest
+          docker push "ghcr.io/kiwi-07/ciwalk-runner:${{ github.sha }}"
