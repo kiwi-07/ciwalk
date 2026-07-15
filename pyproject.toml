@@ -39,8 +39,8 @@ dev = [
 ciwalk = "ciwalk.cli:app"
 
 [project.urls]
-Homepage = "https://github.com/ankit/ciwalk"
-Repository = "https://github.com/ankit/ciwalk"
+Homepage = "https://github.com/kiwi-07/ciwalk"
+Repository = "https://github.com/kiwi-07/ciwalk"
 
 [tool.hatch.build.targets.sdist]
 include = [
