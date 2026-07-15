@@ -1,8 +1,0 @@
-# Default job runner for ciwalk (GHA-like Ubuntu tooling).
-# Built from the same base `act` uses; tagged as our project image.
-FROM catthehacker/ubuntu:act-latest
-
-LABEL org.opencontainers.image.title="ciwalk-runner"
-LABEL org.opencontainers.image.description="Default Docker runner image for ciwalk"
-LABEL org.opencontainers.image.source="https://github.com/kiwi-07/ciwalk"
-LABEL org.opencontainers.image.licenses="MIT"
