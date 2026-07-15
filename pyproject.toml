@@ -49,7 +49,6 @@ include = [
   "/tests",
   "/README.md",
   "/LICENSE",
-  "/cwalk.md",
 ]
 
 [tool.pytest.ini_options]
