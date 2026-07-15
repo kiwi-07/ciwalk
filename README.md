@@ -8,7 +8,7 @@ Run your CI pipeline locally, **pause at any step**, drop into a live shell to i
 ![ciwalk demo: pause, fix, retry](docs/demo.gif)
 
 ```bash
-pip install -e .
+uv tool install ciwalk   # or: pipx install ciwalk
 ciwalk run examples/broken-ci.yml --pause-on-fail
 ```
 
@@ -16,16 +16,42 @@ ciwalk run examples/broken-ci.yml --pause-on-fail
 
 CI feedback is still mostly blind: edit YAML → commit → push → wait → read logs → guess. Tools like [`act`](https://github.com/nektos/act) run Actions locally but are still all-or-nothing. `ciwalk` keeps the container alive, opens a shell at the failure point, and lets you resume.
 
-## Requirements
-
-- Python 3.11+
-- Docker (daemon running)
-
 ## Install
+
+**Requires:** Python 3.11+ and Docker (daemon running).
+
+### From PyPI (recommended, after release)
+
+```bash
+uv tool install ciwalk
+# or
+pipx install ciwalk
+# or
+pip install ciwalk
+```
+
+### From GitHub (no wait for PyPI)
+
+```bash
+uv tool install git+https://github.com/kiwi-07/ciwalk.git
+# or
+pipx install git+https://github.com/kiwi-07/ciwalk.git
+```
+
+### From a clone (dev)
 
 ```bash
 git clone https://github.com/kiwi-07/ciwalk.git && cd ciwalk
 pip install -e ".[dev]"
+```
+
+### Standalone binary
+
+GitHub Releases (starting with `v0.1.0`) attach a platform binary you can download and run without installing Python packages — still needs Docker on the machine.
+
+```bash
+chmod +x ./ciwalk
+./ciwalk run examples/hello.yml
 ```
 
 ## Usage
